@@ -13,8 +13,8 @@
 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR-PUBLIC-ANON-KEY';
+const SUPABASE_URL = 'https://zvffnmbttlkbswkyfpga.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_REJy0AnE5HgfOi17hhbCDw_vKkp8yZ2';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {

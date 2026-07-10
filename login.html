@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in — What Stayed</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="auth-shell">
+
+  <aside class="auth-side">
+    <a href="index.html" class="brand">What Stayed<span class="dot">.</span></a>
+    <div>
+      <p class="auth-quote">&ldquo;A book only changes you at the places you stop to <span class="mark">mark</span>.&rdquo;</p>
+      <p class="auth-attrib">— what your notebook is for</p>
+    </div>
+    <p class="auth-attrib">Private by default. Your library is visible only to you.</p>
+  </aside>
+
+  <main class="auth-main">
+    <div class="auth-card">
+      <a href="index.html" class="brand">What Stayed<span class="dot">.</span></a>
+
+      <div class="auth-tabs" role="tablist" aria-label="Sign in or create an account">
+        <button class="auth-tab" role="tab" data-tab="login" aria-selected="true" id="tab-login">Sign in</button>
+        <button class="auth-tab" role="tab" data-tab="register" aria-selected="false" id="tab-register">Create account</button>
+      </div>
+
+      <!-- LOGIN -->
+      <section class="auth-panel is-active" id="panel-login" role="tabpanel" aria-labelledby="tab-login">
+        <h1>Welcome back</h1>
+        <p class="lede">Sign in to pick up right where you left off.</p>
+
+        <div class="auth-alert" id="login-alert" role="alert"></div>
+
+        <form id="form-login" novalidate>
+          <div class="field">
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" name="email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+          </div>
+          <div class="field-row">
+            <label class="check"><input type="checkbox" /> Stay signed in</label>
+            <a href="#" class="link-muted">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            <span class="btn-label">Sign in</span>
+          </button>
+        </form>
+
+        <p class="auth-switch">New to What Stayed? <a href="#" data-switch="register">Create an account</a></p>
+      </section>
+
+      <!-- REGISTER -->
+      <section class="auth-panel" id="panel-register" role="tabpanel" aria-labelledby="tab-register">
+        <h1>Build your library</h1>
+        <p class="lede">Free to create. Everything you add stays private to your account.</p>
+
+        <div class="auth-alert" id="register-alert" role="alert"></div>
+
+        <form id="form-register" novalidate>
+          <div class="field">
+            <label for="reg-name">Full name</label>
+            <input type="text" id="reg-name" name="fullName" placeholder="Alex Rivera" autocomplete="name" required />
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="reg-email">Email</label>
+            <input type="email" id="reg-email" name="email" placeholder="you@example.com" autocomplete="email" required />
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="reg-password">Password</label>
+            <input type="password" id="reg-password" name="password" placeholder="At least 8 characters" autocomplete="new-password" required />
+            <p class="field-error"></p>
+          </div>
+          <div class="field">
+            <label for="reg-confirm">Confirm password</label>
+            <input type="password" id="reg-confirm" name="confirmPassword" placeholder="••••••••" autocomplete="new-password" required />
+            <p class="field-error"></p>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            <span class="btn-label">Create account</span>
+          </button>
+        </form>
+
+        <p class="auth-switch">Already have an account? <a href="#" data-switch="login">Sign in</a></p>
+      </section>
+
+    </div>
+  </main>
+
+</div>
+
+<script type="module" src="js/auth.js"></script>
+<script>
+  // Small in-page affordance: "Create an account" / "Sign in" links
+  // inside the switch text also flip tabs, without duplicating the
+  // tab-switching logic that lives in auth.js.
+  document.querySelectorAll('[data-switch]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('tab-' + link.dataset.switch).click();
+    });
+  });
+</script>
+
+</body>
+</html>

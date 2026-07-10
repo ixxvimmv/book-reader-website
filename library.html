@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Library — What Stayed</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="app-sidebar">
+    <a href="index.html" class="brand">What Stayed<span class="dot">.</span></a>
+    <ul class="app-nav">
+      <li><a href="dashboard.html"><span class="ic">▦</span> Dashboard</a></li>
+      <li><a href="library.html" class="is-active"><span class="ic">▤</span> Library</a></li>
+    </ul>
+    <div class="app-sidebar-footer">
+      <div class="app-user">
+        <div class="app-user-avatar" id="user-avatar">·</div>
+        <div>
+          <div class="app-user-name" id="user-name">Loading…</div>
+          <div class="app-user-email" id="user-email"></div>
+        </div>
+      </div>
+      <button class="app-logout" id="logout-btn">Sign out</button>
+    </div>
+  </aside>
+
+  <div>
+    <div class="app-topbar-mobile">
+      <a href="index.html" class="brand">What Stayed<span class="dot">.</span></a>
+      <button id="logout-btn-mobile" aria-label="Sign out">⎋</button>
+    </div>
+
+    <main class="app-main">
+      <div class="app-header">
+        <div>
+          <h1>Your library</h1>
+          <p class="lede" id="lib-count">Loading your shelf…</p>
+        </div>
+        <button class="btn btn-primary" id="open-upload" style="background:var(--ink);color:var(--paper-text);">+ Upload a book</button>
+      </div>
+
+      <div class="lib-toolbar">
+        <div class="lib-search">
+          <input type="search" id="search-input" placeholder="Search by title or author" aria-label="Search your library" />
+        </div>
+        <select class="lib-select" id="sort-select" aria-label="Sort books">
+          <option value="recent-added">Recently added</option>
+          <option value="recent-opened">Recently opened</option>
+          <option value="title">Title A–Z</option>
+          <option value="progress">Progress</option>
+        </select>
+      </div>
+
+      <div class="lib-filters" id="filter-chips">
+        <button class="chip is-active" data-filter="all">All</button>
+        <button class="chip" data-filter="reading">Currently reading</button>
+        <button class="chip" data-filter="completed">Completed</button>
+        <button class="chip" data-filter="favorites">Favorites</button>
+      </div>
+
+      <div class="book-grid" id="book-grid">
+        <div class="skeleton" style="aspect-ratio:3/5.1;"></div>
+        <div class="skeleton" style="aspect-ratio:3/5.1;"></div>
+        <div class="skeleton" style="aspect-ratio:3/5.1;"></div>
+        <div class="skeleton" style="aspect-ratio:3/5.1;"></div>
+        <div class="skeleton" style="aspect-ratio:3/5.1;"></div>
+        <div class="skeleton" style="aspect-ratio:3/5.1;"></div>
+      </div>
+
+      <div id="empty-library" style="display:none;">
+        <div class="empty-state">
+          <h3>Nothing on the shelf yet</h3>
+          <p>Upload a PDF or EPUB to start your library. It'll stay private to your account from the moment it lands here.</p>
+          <button class="btn btn-primary" id="open-upload-empty" style="background:var(--ink);color:var(--paper-text);">Upload your first book</button>
+        </div>
+      </div>
+
+      <div id="no-matches" style="display:none;">
+        <div class="empty-state">
+          <h3>No books match</h3>
+          <p>Try a different search term or clear the current filter.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</div>
+
+<!-- Upload modal -->
+<div class="modal-backdrop" id="modal-upload-backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="upload-title">
+    <div class="modal-head">
+      <h2 id="upload-title">Upload a book</h2>
+      <button class="modal-close" data-close="modal-upload-backdrop" aria-label="Close">✕</button>
+    </div>
+
+    <div class="auth-alert" id="upload-alert" role="alert"></div>
+
+    <form id="form-upload">
+      <div class="dropzone" id="dropzone-file" tabindex="0">
+        <div id="dropzone-file-label"><strong>Click to choose</strong> a PDF or EPUB, or drag it here</div>
+        <input type="file" id="file-input" accept=".pdf,.epub,application/pdf,application/epub+zip" class="visually-hidden" />
+      </div>
+
+      <div class="field">
+        <label for="up-title">Title</label>
+        <input type="text" id="up-title" name="title" required />
+      </div>
+      <div class="field">
+        <label for="up-author">Author</label>
+        <input type="text" id="up-author" name="author" />
+      </div>
+      <div class="field">
+        <label for="up-description">Description</label>
+        <textarea id="up-description" name="description" placeholder="Optional"></textarea>
+      </div>
+      <div class="field">
+        <label for="up-collection">Collection</label>
+        <input type="text" id="up-collection" name="collection" placeholder="e.g. Philosophy, Currently studying — optional" />
+      </div>
+
+      <div class="dropzone" id="dropzone-cover" tabindex="0">
+        <div id="dropzone-cover-label"><strong>Add a cover</strong> (optional) — click or drag an image</div>
+        <input type="file" id="cover-input" accept="image/*" class="visually-hidden" />
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="modal-upload-backdrop">Cancel</button>
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-spinner" aria-hidden="true"></span>
+          <span class="btn-label">Add to library</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit modal -->
+<div class="modal-backdrop" id="modal-edit-backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+    <div class="modal-head">
+      <h2 id="edit-title">Edit book</h2>
+      <button class="modal-close" data-close="modal-edit-backdrop" aria-label="Close">✕</button>
+    </div>
+    <div class="auth-alert" id="edit-alert" role="alert"></div>
+    <form id="form-edit">
+      <input type="hidden" id="edit-id" />
+      <div class="field">
+        <label for="edit-title-input">Title</label>
+        <input type="text" id="edit-title-input" required />
+      </div>
+      <div class="field">
+        <label for="edit-author">Author</label>
+        <input type="text" id="edit-author" />
+      </div>
+      <div class="field">
+        <label for="edit-description">Description</label>
+        <textarea id="edit-description"></textarea>
+      </div>
+      <div class="field">
+        <label for="edit-collection">Collection</label>
+        <input type="text" id="edit-collection" />
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="modal-edit-backdrop">Cancel</button>
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-spinner" aria-hidden="true"></span>
+          <span class="btn-label">Save changes</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete confirm modal -->
+<div class="modal-backdrop" id="modal-delete-backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="delete-title">
+    <div class="modal-head">
+      <h2 id="delete-title">Remove this book?</h2>
+      <button class="modal-close" data-close="modal-delete-backdrop" aria-label="Close">✕</button>
+    </div>
+    <p style="color:var(--app-muted); font-size:0.9rem;" id="delete-copy">This removes the book, its file, and its highlights from your library. This can't be undone.</p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close="modal-delete-backdrop">Cancel</button>
+      <button type="button" class="btn btn-primary" id="confirm-delete-btn" style="background:var(--app-danger); color:#fff;">Delete book</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+
+<script type="module" src="js/library.js"></script>
+</body>
+</html>

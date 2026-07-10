@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard — What Stayed</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="app-sidebar">
+    <a href="index.html" class="brand">What Stayed<span class="dot">.</span></a>
+    <ul class="app-nav">
+      <li><a href="dashboard.html" class="is-active"><span class="ic">▦</span> Dashboard</a></li>
+      <li><a href="library.html"><span class="ic">▤</span> Library</a></li>
+    </ul>
+    <div class="app-sidebar-footer">
+      <div class="app-user">
+        <div class="app-user-avatar" id="user-avatar">·</div>
+        <div>
+          <div class="app-user-name" id="user-name">Loading…</div>
+          <div class="app-user-email" id="user-email"></div>
+        </div>
+      </div>
+      <button class="app-logout" id="logout-btn">Sign out</button>
+    </div>
+  </aside>
+
+  <div>
+    <div class="app-topbar-mobile">
+      <a href="index.html" class="brand">What Stayed<span class="dot">.</span></a>
+      <button id="logout-btn-mobile" aria-label="Sign out">⎋</button>
+    </div>
+
+    <main class="app-main">
+      <div class="app-header">
+        <div>
+          <h1 id="greeting">Welcome back</h1>
+          <p class="lede" id="today-date"></p>
+        </div>
+        <a href="library.html?upload=1" class="btn btn-primary" style="background:var(--ink);color:var(--paper-text);">+ Upload a book</a>
+      </div>
+
+      <!-- Populated by dashboard.js. Shown while stats/books load. -->
+      <div class="stat-grid" id="stat-grid">
+        <div class="stat-card"><div class="skeleton" style="height:70px;"></div></div>
+        <div class="stat-card"><div class="skeleton" style="height:70px;"></div></div>
+        <div class="stat-card"><div class="skeleton" style="height:70px;"></div></div>
+        <div class="stat-card"><div class="skeleton" style="height:70px;"></div></div>
+      </div>
+
+      <section class="app-section" id="recent-section" style="display:none;">
+        <div class="app-section-head">
+          <h2>Recently opened</h2>
+          <a href="library.html">View library →</a>
+        </div>
+        <div class="recent-row" id="recent-row"></div>
+      </section>
+
+      <div id="empty-dashboard" style="display:none;">
+        <div class="empty-state">
+          <h3>Your shelf is empty</h3>
+          <p>Upload your first PDF or EPUB to start building a library that's private to your account.</p>
+          <a href="library.html?upload=1" class="btn btn-primary" style="background:var(--ink);color:var(--paper-text);">Upload a book</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</div>
+
+<div class="toast-stack" id="toast-stack"></div>
+
+<script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
